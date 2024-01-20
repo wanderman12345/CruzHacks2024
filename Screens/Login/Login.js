@@ -1,12 +1,19 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Platform} from 'react-native';
 
 const LoginScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Login Account</Text>
-      <Text style={styles.titleSlug}>Slug</Text>
-      <Text style={styles.titleCare}>Care</Text>
+      <View style={styles.circleYellow} />
+      <View style={styles.circleBlue} />
+
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>Login Account</Text>
+      </View>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleSlug}>Slug</Text>
+        <Text style={styles.titleCare}>Care</Text>
+      </View>
       
       <TextInput
         style={styles.input}
@@ -21,21 +28,28 @@ const LoginScreen = () => {
       <TouchableOpacity style={styles.loginButton}>
         <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
-
-      <View style={styles.socialButtons}>
-        <View style={styles.socialButton}>
-          {/* Add Google Icon */}
-        </View>
-        <View style={styles.socialButton}>
-          {/* Add Facebook Icon */}
-        </View>
-        <View style={styles.socialButton}>
-          {/* Add Apple Icon */}
-        </View>
-      </View>
-
       <View style={styles.divider} />
       <Text style={styles.signUpWithText}>Or sign up with</Text>
+      <View style={styles.socialIcons}>
+        <View style={styles.socialButtonsContainer}>
+        <Image
+            style={styles.googleIcon}
+            source={require('../../Images/GoogleIcon.png')}
+        />
+        </View>
+        <View style={styles.socialButtonsContainer2}>
+        <Image
+            style={styles.googleIcon}
+            source={require('../../Images/Facebook.png')}
+        />
+        </View>
+        <View style={styles.socialButtonsContainer3}>
+        <Image
+            style={styles.googleIcon}
+            source={require('../../Images/Linkedin.png')}
+        />
+        </View>
+      </View>
       <View style={styles.divider} />
 
       <Text style={styles.notRegisteredText}>Not register yet ?</Text>
@@ -46,7 +60,7 @@ const LoginScreen = () => {
       {/* Replace with your actual image */}
       <Image
         style={styles.imageStyle}
-        source={{ uri: 'https://via.placeholder.com/381x378' }}
+        source={require('../../Images/SDS_UCSantaCruz_RedwoodSlug_WhiteGround.png')}
       />
     </View>
   );
@@ -56,23 +70,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 40,
-    overflow: 'hidden',
+    justifyContent: 'flex-start',
+    paddingTop: 60, // Adjust this for status bar height and top spacing
+    paddingHorizontal: 20, // Side padding for the whole screen
     backgroundColor: 'white',
   },
+  titleContainer: {
+    flexDirection: 'row', 
+    // alignItems: 'flex-end',
+    justifyContent: 'center', // Center the titles
+    marginBottom: 30, // Add space below the title
+  },
+  socialIcons: {
+    flexDirection: 'row', 
+    alignItems: 'flex-end',
+  },
   header: {
+    alignSelf: 'flex-start', // aligns the text to the left
     fontSize: 24,
     fontWeight: '600',
     color: 'black',
+    //marginTop: 3, // or adjust according to your status bar height
+    marginLeft: 10, // or adjust for desired padding from the left edge
+  },
+  headerContainer: {
+    width: '100%', // Take full width to align the text to the left
     marginBottom: 20,
   },
   titleSlug: {
+    height: 70,
+    right: 10,
     color: '#000088',
     fontSize: 60,
     fontWeight: '500',
   },
   titleCare: {
+    height: 70,
+    right: 10,
     color: '#FFC600',
     fontSize: 60,
     fontWeight: '700',
@@ -98,12 +132,24 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   socialButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '80%',
-    marginVertical: 20,
+    flex: 1, // This will expand the box to fill its container
+    backgroundColor: 'white',
+    borderRadius: 8,
+    // React Native doesn't support CSS box-shadows directly. Elevation is used for Android, and shadow properties for iOS.
+    // You may need to adjust the shadow properties to achieve the effect you want.
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgba(0, 0, 0, 0.25)',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 1,
+        shadowRadius: 1,
+      },
+      android: {
+        elevation: 1,
+      },
+    }),
   },
-  socialButton: {
+  socialButton1: {
     width: 75,
     height: 48,
     backgroundColor: 'white',
@@ -133,9 +179,65 @@ const styles = StyleSheet.create({
     width: 381,
     height: 378,
     position: 'absolute',
-    top: '60%', // Adjust as needed
+    top: '45%',
+    opacity: 0.1,
   },
-  // Add additional styling as needed
+  imageIcon: {
+    width: 381,
+    height: 378,
+    position: 'absolute',
+    top: '45%',
+    opacity: 0.1,
+  },
+  socialButtonsContainer: {
+    // flexDirection: 'row',
+    // justifyContent: 'space-evenly',
+    // alignItems: 'center',
+    // width: '100%',
+    marginTop: 10, // Adjust as needed
+    right: 90
+  },
+  socialButtonsContainer2: {
+    // flexDirection: 'row',
+    // justifyContent: 'space-evenly',
+    // alignItems: 'center',
+    // width: '100%',
+    marginTop: 10, // Adjust as needed
+    left: 0
+  },
+  socialButtonsContainer3: {
+    // flexDirection: 'row',
+    // justifyContent: 'space-evenly',
+    // alignItems: 'center',
+    // width: '100%',
+    marginTop: 10, // Adjust as needed
+    left: 90
+  },
+  googleIcon: {
+    width: 24, // Typically, icons can be within 24x24 to 48x48 for mobile apps
+    height: 24,
+    resizeMode: 'contain', // Ensures the icon scales without distortion
+  },
+  circleYellow: {
+    position: 'absolute',
+    width: 1000, // Large enough to extend off screen
+    height: 1000, // Large enough to extend off screen
+    borderRadius: 500, // Half of the width/height to make it a circle
+    backgroundColor: '#FFC600',
+    top: -450, // Adjust these values to position the circle
+    left: -250, // Adjust these values to position the circle
+    opacity: 0.2,
+  },
+  circleBlue: {
+    position: 'absolute',
+    width: 800, // Slightly smaller than the yellow one
+    height: 800, // Slightly smaller than the yellow one
+    borderRadius: 400, // Half of the width/height to make it a circle
+    backgroundColor: '#1953E8',
+    top: -350, // Adjust these values to position the circle
+    right: -400, // Adjust these values to position the circle
+    opacity: 0.2,
+  },
 });
 
 export default LoginScreen;
