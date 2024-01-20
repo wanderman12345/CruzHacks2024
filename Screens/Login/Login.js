@@ -5,8 +5,8 @@ import { useNavigation} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
-const LoginScreen = () => {
- const navigation = useNavigation();
+const LoginScreen = ({navigation}) => {
+ const nav = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.circleYellow} />
@@ -59,7 +59,7 @@ const LoginScreen = () => {
 
       <Text style={styles.notRegisteredText}>Not register yet ?</Text>
       <View style={styles.buttons}>
-      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+      <TouchableOpacity onPress={() => nav.navigate('Register')}>
         <Text style={styles.createAccountText}>Create Account</Text>
       </TouchableOpacity>
       </View>

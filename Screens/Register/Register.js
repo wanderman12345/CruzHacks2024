@@ -1,7 +1,9 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import { useNavigation} from '@react-navigation/native';
 
 const RegisterScreen = ({navigation}) => {
+    const nav = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.circleYellow} />
@@ -34,7 +36,7 @@ const RegisterScreen = ({navigation}) => {
 
         <View style={styles.bottomContainer}>
             <Text style={styles.accountHaveText}>Already have an account? </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => nav.navigate('Login')}>
                 <Text style={styles.loginHereText}>Login Here</Text>
             </TouchableOpacity>
         </View>
