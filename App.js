@@ -10,6 +10,12 @@ export default function App() {
   );
 }
 
+db.collection("users").get().then((querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data()}`);
+  });
+});
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
