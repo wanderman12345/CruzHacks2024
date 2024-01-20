@@ -56,7 +56,7 @@ const LoginScreen = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.divider} />
-
+    
       <Text style={styles.notRegisteredText}>Not register yet ?</Text>
       <View style={styles.buttons}>
       <TouchableOpacity onPress={() => nav.navigate('Register')}>
