@@ -1,57 +1,141 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import Title from '../components/title';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-const Home = ({navigation}) => {
+const LoginScreen = () => {
   return (
     <View style={styles.container}>
-      <Title titleText='QUIZZLER' />
-      <View style={styles.bannerContainer}>
-        <Image
-          source={{
-            uri: 'https://cdni.iconscout.com/illustration/premium/thumb/giving-different-feedback-and-review-in-websites-2112230-1779230.png',
-          }}
-          style={styles.banner}
-          resizeMode="contain"
-        />
-      </View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Quiz')}
-        style={styles.button}>
-        <Text style={styles.buttonText}>Start</Text>
+      <Text style={styles.header}>Login Account</Text>
+      <Text style={styles.titleSlug}>Slug</Text>
+      <Text style={styles.titleCare}>Care</Text>
+      
+      <TextInput
+        style={styles.input}
+        placeholder="Enter Email"
+        keyboardType="email-address"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Enter Password"
+        secureTextEntry
+      />
+      <TouchableOpacity style={styles.loginButton}>
+        <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
+
+      <View style={styles.socialButtons}>
+        <View style={styles.socialButton}>
+          {/* Add Google Icon */}
+        </View>
+        <View style={styles.socialButton}>
+          {/* Add Facebook Icon */}
+        </View>
+        <View style={styles.socialButton}>
+          {/* Add Apple Icon */}
+        </View>
+      </View>
+
+      <View style={styles.divider} />
+      <Text style={styles.signUpWithText}>Or sign up with</Text>
+      <View style={styles.divider} />
+
+      <Text style={styles.notRegisteredText}>Not register yet ?</Text>
+      <TouchableOpacity>
+        <Text style={styles.createAccountText}>Create Account</Text>
+      </TouchableOpacity>
+
+      {/* Replace with your actual image */}
+      <Image
+        style={styles.imageStyle}
+        source={{ uri: 'https://via.placeholder.com/381x378' }}
+      />
     </View>
   );
 };
 
-export default Home;
-
 const styles = StyleSheet.create({
-  banner: {
-    height: 300,
-    width: 300,
-  },
-  bannerContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
   container: {
-    paddingTop: 40,
-    paddingHorizontal: 20,
-    height: '100%',
-  },
-  button: {
-    width: '100%',
-    backgroundColor: '#1A759F',
-    padding: 16,
-    borderRadius: 16,
+    flex: 1,
     alignItems: 'center',
-    marginBottom: 30,
+    justifyContent: 'center',
+    borderRadius: 40,
+    overflow: 'hidden',
+    backgroundColor: 'white',
   },
-  buttonText: {
+  header: {
     fontSize: 24,
     fontWeight: '600',
-    color: 'white',
+    color: 'black',
+    marginBottom: 20,
   },
+  titleSlug: {
+    color: '#000088',
+    fontSize: 60,
+    fontWeight: '500',
+  },
+  titleCare: {
+    color: '#FFC600',
+    fontSize: 60,
+    fontWeight: '700',
+  },
+  input: {
+    height: 48,
+    width: '80%',
+    marginVertical: 10,
+    borderWidth: 0.6,
+    borderColor: '#6C6A6A',
+    borderRadius: 8,
+    padding: 10,
+  },
+  loginButton: {
+    backgroundColor: '#FFC600',
+    borderRadius: 8,
+    padding: 10,
+    width: '80%',
+    alignItems: 'center',
+  },
+  loginButtonText: {
+    fontSize: 18,
+    color: 'black',
+  },
+  socialButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '80%',
+    marginVertical: 20,
+  },
+  socialButton: {
+    width: 75,
+    height: 48,
+    backgroundColor: 'white',
+    // Add shadow styling
+    borderRadius: 8,
+  },
+  divider: {
+    height: 0.6,
+    backgroundColor: '#A39797',
+    width: '80%',
+    marginVertical: 10,
+  },
+  signUpWithText: {
+    fontSize: 12,
+    color: '#757171',
+  },
+  notRegisteredText: {
+    color: '#636363',
+    fontSize: 13,
+  },
+  createAccountText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#0C1F22',
+  },
+  imageStyle: {
+    width: 381,
+    height: 378,
+    position: 'absolute',
+    top: '60%', // Adjust as needed
+  },
+  // Add additional styling as needed
 });
+
+export default LoginScreen;
