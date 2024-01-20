@@ -1,7 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Platform} from 'react-native';
+import { useNavigation} from '@react-navigation/native';
+
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 const LoginScreen = () => {
+ const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.circleYellow} />
@@ -14,7 +19,7 @@ const LoginScreen = () => {
         <Text style={styles.titleSlug}>Slug</Text>
         <Text style={styles.titleCare}>Care</Text>
       </View>
-      
+
       <TextInput
         style={styles.input}
         placeholder="Enter Email"
@@ -53,14 +58,15 @@ const LoginScreen = () => {
       <View style={styles.divider} />
 
       <Text style={styles.notRegisteredText}>Not register yet ?</Text>
-      <TouchableOpacity>
+      <View style={styles.buttons}>
+      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text style={styles.createAccountText}>Create Account</Text>
       </TouchableOpacity>
-
+      </View>
       {/* Replace with your actual image */}
       <Image
-        style={styles.imageStyle}
-        source={require('../../Images/SDS_UCSantaCruz_RedwoodSlug_WhiteGround.png')}
+        // style={styles.imageStyle}
+        // source={require('../../Images/SDS_UCSantaCruz_RedwoodSlug_WhiteGround.png')}
       />
     </View>
   );
@@ -76,13 +82,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   titleContainer: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     // alignItems: 'flex-end',
     justifyContent: 'center', // Center the titles
     marginBottom: 30, // Add space below the title
   },
   socialIcons: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     alignItems: 'flex-end',
   },
   header: {
@@ -198,7 +204,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // width: '100%',
     marginTop: 10, // Adjust as needed
-    right: 50, 
+    right: 50,
     justifyContent: 'center',
     marginHorizontal: 10, // Space between buttons
     padding: 10, // Padding inside the touchable area
@@ -234,7 +240,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // width: '100%',
     marginTop: 10, // Adjust as needed
-    left: 50, 
+    left: 50,
     justifyContent: 'center',
     marginHorizontal: 10, // Space between buttons
     padding: 10, // Padding inside the touchable area

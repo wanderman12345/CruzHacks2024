@@ -1,22 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import LoginScreen from './Screens/Login/Login';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import RegisterScreen from "./Screens/Register/Register.js";
+import LoginScreen from "./Screens/Login/Login.js";
+
 
 export default function App() {
-  return (
-    <LoginScreen></LoginScreen>
-    // <View style={styles.container}>
-    //   <Text>Open !</Text>
-    //   <StatusBar style="auto" />
-    // </View>
-  );
-}
+  const Stack = createNativeStackNavigator();
 
-db.collection("users").get().then((querySnapshot) => {
-  querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-  });
-});
+  return (
+    <NavigationContainer>
+    <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+    </Stack.Navigator>
+  </NavigationContainer>
+);
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -26,3 +28,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
