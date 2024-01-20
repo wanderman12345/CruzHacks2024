@@ -31,24 +31,24 @@ const LoginScreen = () => {
       <View style={styles.divider} />
       <Text style={styles.signUpWithText}>Or sign up with</Text>
       <View style={styles.socialIcons}>
-        <View style={styles.socialButtonsContainer}>
+        <TouchableOpacity style={styles.socialButtonsContainer}>
         <Image
             style={styles.googleIcon}
             source={require('../../Images/GoogleIcon.png')}
         />
-        </View>
-        <View style={styles.socialButtonsContainer2}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialButtonsContainer2}>
         <Image
             style={styles.googleIcon}
             source={require('../../Images/Facebook.png')}
         />
-        </View>
-        <View style={styles.socialButtonsContainer3}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialButtonsContainer3}>
         <Image
             style={styles.googleIcon}
             source={require('../../Images/Linkedin.png')}
         />
-        </View>
+        </TouchableOpacity>
       </View>
       <View style={styles.divider} />
 
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '80%',
     alignItems: 'center',
+    // zIndex: 3,
   },
   loginButtonText: {
     fontSize: 18,
@@ -174,13 +175,15 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     color: '#0C1F22',
+    zIndex: 3
   },
   imageStyle: {
     width: 381,
     height: 378,
     position: 'absolute',
-    top: '45%',
+    top: '60%',
     opacity: 0.1,
+    zIndex:1
   },
   imageIcon: {
     width: 381,
@@ -195,7 +198,17 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // width: '100%',
     marginTop: 10, // Adjust as needed
-    right: 90
+    right: 50, 
+    justifyContent: 'center',
+    marginHorizontal: 10, // Space between buttons
+    padding: 10, // Padding inside the touchable area
+    borderRadius: 22, // Half of the width/height to make it a circle
+    backgroundColor: '#e6e6e6', // Light grey background for the button
+    shadowColor: 'rgba(0, 0, 0, 0.1)', // Soft shadow around the button
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 3, // Elevation for Android shadow
   },
   socialButtonsContainer2: {
     // flexDirection: 'row',
@@ -203,7 +216,17 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // width: '100%',
     marginTop: 10, // Adjust as needed
-    left: 0
+    right: 0,
+    justifyContent: 'center',
+    marginHorizontal: 10, // Space between buttons
+    padding: 10, // Padding inside the touchable area
+    borderRadius: 22, // Half of the width/height to make it a circle
+    backgroundColor: '#e6e6e6', // Light grey background for the button
+    shadowColor: 'rgba(0, 0, 0, 0.1)', // Soft shadow around the button
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 3, // Elevation for Android shadow
   },
   socialButtonsContainer3: {
     // flexDirection: 'row',
@@ -211,7 +234,17 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // width: '100%',
     marginTop: 10, // Adjust as needed
-    left: 90
+    left: 50, 
+    justifyContent: 'center',
+    marginHorizontal: 10, // Space between buttons
+    padding: 10, // Padding inside the touchable area
+    borderRadius: 22, // Half of the width/height to make it a circle
+    backgroundColor: '#e6e6e6', // Light grey background for the button
+    shadowColor: 'rgba(0, 0, 0, 0.1)', // Soft shadow around the button
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 3, // Elevation for Android shadow,
   },
   googleIcon: {
     width: 24, // Typically, icons can be within 24x24 to 48x48 for mobile apps
