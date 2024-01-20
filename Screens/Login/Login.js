@@ -51,7 +51,7 @@ const LoginScreen = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.divider} />
-
+    
       <Text style={styles.notRegisteredText}>Not register yet ?</Text>
       <TouchableOpacity>
         <Text style={styles.createAccountText}>Create Account</Text>
