@@ -1,5 +1,6 @@
 import { db } from "./firebaseConfig";
 import { doc, setDoc, updateDoc, getDoc, getDocs } from 'firebase/firestore';
+import { auth } from "./firebaseConfig";
 
 export const getAllUserInfo = async() => {
     const userCollection = collection(db, "users");
@@ -15,15 +16,22 @@ export const getAllUserInfo = async() => {
     }
 }
 export const setUserInfo = async(userId, data) => {
-    console.log(data);
     const workRef = doc(db, "users", userId);
-    await setDoc(workRef, data)
-        .then(() => {
-            console.log("successfully added user info.");
-        })
-        .catch((err) => {
-            console.log("error ", err);
-        })
+    try {
+        await setDoc(workRef, data);
+        console.log("successfully added user info.");
+    } catch (err) {
+        console.error("error ", err);
+    }
+}
+export async function createUserDb(userId, data){
+    const workRef = doc(db, "users", userId);
+    try {
+        await setDoc(workRef, data);
+        console.log("successfully added user info.");
+    } catch (err) {
+        console.error("error ", err);
+    }                                         
 }
 
 // Creating a document for Fitness to specify routine

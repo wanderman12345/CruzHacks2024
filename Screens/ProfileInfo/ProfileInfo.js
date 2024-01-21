@@ -2,43 +2,56 @@ import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Image } from 'react-native';
+import { auth } from '../../Backend/firebaseConfig';
+import { createUserDb, setUserInfo, getAllUserInfo} from '../../Backend/backend';
+import { useState } from 'react';
 
 const ProfileInfoScreen = ({navigation}) => {
-   const nav = useNavigation()
-   const MoveNextScreen = () => {
-      nav.navigate("QuestionScreen")
-   }
-  return (
-    <View style={styles.container}>
-      <View style={styles.circleYellow} />
-      <View style={styles.circleBlue} />
-      <View style={styles.header}>
-      </View>
-      <View style={styles.formContainer}>
-        <Text style={styles.title}>Profile info</Text>
-        <Text style={styles.subtitle}>Fill in the data for profile. It will take a couple of minutes.</Text>
-
-        {/* Personal Data Section */}
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Name</Text>
-          <TextInput style={styles.input} placeholder="Name" />
-          {/* <Text style={styles.label}>Second name</Text>
-          <TextInput style={styles.input} placeholder="Second name" /> */}
-          <Text style={styles.label}>Gender</Text>
-          <TextInput style={styles.input} placeholder="Gender" />
-          <Text style={styles.label}>Age</Text>
-          <TextInput style={styles.input} placeholder="Age" />
+    const [name, setName] = useState("");
+    const [gender, setGender] = useState("");
+    const [age, setAge] = useState("");
+    const nav = useNavigation()
+    const MoveNextScreen = () => {
+        const uid = auth.currentUser;
+        const data = {
+            "Name": name, 
+            "Gender": gender, 
+            "Age": age
+        }
+        console.log("hello")
+        setUserInfo(uid, data);
+        console.log("map")
+        console.log(getAllUserInfo());
+        nav.navigate("QuestionScreen");
+    }
+    return (
+        <View style={styles.container}>
+        <View style={styles.circleYellow} />
+        <View style={styles.circleBlue} />
+        <View style={styles.header}>
         </View>
+        <View style={styles.formContainer}>
+            <Text style={styles.title}>Profile info</Text>
+            <Text style={styles.subtitle}>Fill in the data for profile. It will take a couple of minutes.</Text>
 
-        <TouchableOpacity style={styles.button} onPress={MoveNextScreen} >
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
-        <Image
-            source={require('../../Images/SDS_UCSantaCruz_RedwoodSlug_WhiteGround.png')}
-        />
-      </View>
-    </View>
-  );
+            {/* Personal Data Section */}
+            <View style={styles.inputContainer}>
+            <Text style={styles.label}>Full Name</Text>
+            <TextInput style={styles.input} placeholder="Name" onChangeText={(text)=>setName(text)}/>
+            <Text style={styles.label}>Gender</Text>
+            <TextInput style={styles.input} placeholder="Gender" onChangeText={(text)=>setGender(text)}/>
+            <Text style={styles.label}>Age</Text>
+            <TextInput style={styles.input} placeholder="Age" onChangeText={(text) => setAge(text)}/>
+            </View>
+            <TouchableOpacity style={styles.button} onPress={MoveNextScreen} >
+                <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
+            <Image
+                source={require('../../Images/SDS_UCSantaCruz_RedwoodSlug_WhiteGround.png')}
+            />
+        </View>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({

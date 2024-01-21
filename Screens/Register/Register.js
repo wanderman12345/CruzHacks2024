@@ -51,7 +51,9 @@ const RegisterScreen = ({setIsSignedIn}) => {
                     setErrorMessage("This is an invalid email");
                 }
             })
+            console.log("hello");
             nav.navigate('ProfileInfo');
+            console.log("hedfdllo");
         }
     }
     return (
