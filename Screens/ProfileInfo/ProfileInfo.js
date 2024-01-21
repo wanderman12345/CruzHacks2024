@@ -1,15 +1,22 @@
+import { useNavigation } from '@react-navigation/core';
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { Image } from 'react-native';
 
-const ProfileInfoScreen = () => {
+const ProfileInfoScreen = ({navigation}) => {
+   const nav = useNavigation()
+   const MoveNextScreen = () => {
+      nav.navigate("QuestionScreen")
+   }
   return (
     <View style={styles.container}>
+      <View style={styles.circleYellow} />
+      <View style={styles.circleBlue} />
       <View style={styles.header}>
-        {/* You can add your navigation bar here */}
       </View>
       <View style={styles.formContainer}>
         <Text style={styles.title}>Profile info</Text>
-        <Text style={styles.subtitle}>Fill in the data for profile. It will take a couple of minutes. You only need a passport</Text>
+        <Text style={styles.subtitle}>Fill in the data for profile. It will take a couple of minutes.</Text>
 
         {/* Personal Data Section */}
         <View style={styles.inputContainer}>
@@ -23,28 +30,29 @@ const ProfileInfoScreen = () => {
           <TextInput style={styles.input} placeholder="Age" />
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={MoveNextScreen} >
           <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
-        
+        <Image
+            source={require('../../Images/SDS_UCSantaCruz_RedwoodSlug_WhiteGround.png')}
+        />
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#1953E8', // Light blue background
-    opacity: 0.8,
-  },
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#1953E8', // Light blue background
+//     opacity: 0.8,
+//   },
   header: {
     // Style your header here
   },
   formContainer: {
     padding: 20,
     marginTop: 100,
-    
     // other styles
   },
   title: {
@@ -64,12 +72,12 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    color: 'white',
+    color: 'blue',
     marginBottom: 5,
   },
   input: {
     borderWidth: 1,
-    borderColor: 'white', // Gold border for inputs
+    borderColor: 'blue', // Gold border for inputs
     padding: 10,
     marginBottom: 15,
     borderRadius: 5,
@@ -84,6 +92,26 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
     fontWeight: 'bold',
+  },
+  circleYellow: {
+    position: 'absolute',
+    width: 1000, // Large enough to extend off screen
+    height: 1000, // Large enough to extend off screen
+    borderRadius: 500, // Half of the width/height to make it a circle
+    backgroundColor: '#FFC600',
+    top: -450, // Adjust these values to position the circle
+    left: -250, // Adjust these values to position the circle
+    opacity: 0.2,
+  },
+  circleBlue: {
+    position: 'absolute',
+    width: 800, // Slightly smaller than the yellow one
+    height: 800, // Slightly smaller than the yellow one
+    borderRadius: 400, // Half of the width/height to make it a circle
+    backgroundColor: '#1953E8',
+    top: -350, // Adjust these values to position the circle
+    right: -400, // Adjust these values to position the circle
+    opacity: 0.2,
   },
 });
 

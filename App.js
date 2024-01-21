@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import RegisterScreen from "./Screens/Register/Register.js";
 import LoginScreen from "./Screens/Login/Login.js";
+import ProfileInfoScreen from './Screens/ProfileInfo/ProfileInfo.js';
+import QuestionnaireScreen from './Screens/QuestionnaireScreen/QuestionnaireScreen.js';
 
 
 export default function App() {
@@ -15,6 +17,8 @@ export default function App() {
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="ProfileInfo" component={ProfileInfoScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="QuestionScreen" component={QuestionnaireScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   </NavigationContainer>
 );

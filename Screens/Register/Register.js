@@ -1,52 +1,105 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { useNavigation} from '@react-navigation/native';
+import { auth } from '../../Backend/firebaseConfig';
 
-const RegisterScreen = ({navigation}) => {
+const RegisterScreen = ({setIsSignedIn}) => {
     const nav = useNavigation();
-  return (
-    <View style={styles.container}>
-      <View style={styles.circleYellow} />
-      <View style={styles.circleBlue} />
-        <Text style={styles.header}>Register Account</Text>
-        <View style={styles.titleContainer}>
-            <Text style={styles.titleSlug}>Slug</Text>
-            <Text style={styles.titleCare}>Care</Text>
-        </View>
 
-        <TextInput
-        style={styles.input}
-        placeholder="Enter Email"
-        keyboardType="email-address"
-        />
-        <TextInput
-        style={styles.input}
-        placeholder="Enter Password"
-        secureTextEntry
-        />
-        <TextInput
-        style={styles.input}
-        placeholder="Re-enter Password"
-        secureTextEntry
-        />
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
-        <TouchableOpacity style={styles.createAccount}>
-            <Text style={styles.createAccountText}>Create Account</Text>
-        </TouchableOpacity>
+    function changeEmail(e){
+        setEmail(e.target.value);
+    }
+    function changePassword(e){
+        setPassword(e.target.value);
+    }
+    function changeConfirmPassword(e){
+        setConfirmPassword(e.target.value);
+    }
+    const sendOver = (e) => {
+        nav.navigate('ProfileInfo')
+    }
 
-        <View style={styles.bottomContainer}>
-            <Text style={styles.accountHaveText}>Already have an account? </Text>
-            <TouchableOpacity onPress={() => nav.navigate('Login')}>
-                <Text style={styles.loginHereText}>Login Here</Text>
+    const registerUser = (e) =>{
+        console.log(email)
+        console.log(password)
+        if (email.length === 0) {
+            setErrorMessage("Email not entered");
+        }
+        else if (password.length === 0 || confirmPassword.length === 0){
+            setErrorMessage("Password not entered");
+        }
+        else if (password !== confirmPassword){
+            setErrorMessage("Please double check password")
+        }
+        else{
+            createUserWithEmailAndPassword(auth, email, password).then((userCredential)=>{
+                const user = userCredential.user;
+                setIsSignedIn(true)
+                console.log(email)
+                console.log(password)
+            }).catch((error) => {
+                const errorCode = error.code;
+                if(errorCode === 'auth/email-already-in-use'){
+                    setErrorMessage("The email is already in use");
+                }else if(errorCode === 'auth/invalid-email'){
+                    setErrorMessage("This is an invalid email");
+                }
+            })
+            nav.navigate('ProfileInfo');
+        }
+    }
+    return (
+        <View style={styles.container}>
+        <View style={styles.circleYellow} />
+        <View style={styles.circleBlue} />
+            <Text style={styles.header}>Register Account</Text>
+            <View style={styles.titleContainer}>
+                <Text style={styles.titleSlug}>Slug</Text>
+                <Text style={styles.titleCare}>Care</Text>
+            </View>
+
+            <TextInput
+            style={styles.input}
+            placeholder="Enter Email"
+            keyboardType="email-address"
+            onChangeText={(text)=>setEmail(text)}
+            />
+            <TextInput
+            style={styles.input}
+            placeholder="Enter Password"
+            secureTextEntry
+            onChangeText={(text)=>setPassword(text)}
+            />
+            <TextInput
+            style={styles.input}
+            placeholder="Re-enter Password"
+            secureTextEntry
+            onChangeText={(text)=>setConfirmPassword(text)}
+            />
+
+            <TouchableOpacity style={styles.createAccount} onPress={registerUser}>
+                <Text style={styles.createAccountText}>Create Account</Text>
             </TouchableOpacity>
-        </View>
 
-        <Image
-            style={styles.imageStyle}
-            source={require('../../Images/SDS_UCSantaCruz_RedwoodSlug_WhiteGround.png')}
-        />
-    </View>
-  );
+            <View style={styles.bottomContainer}>
+                <Text style={styles.accountHaveText}>Already have an account? </Text>
+                <TouchableOpacity onPress={() => nav.navigate('Login')}>
+                    <Text style={styles.loginHereText}>Login Here</Text>
+                </TouchableOpacity>
+            </View>
+
+            <Image
+                style={styles.imageStyle}
+                source={require('../../Images/SDS_UCSantaCruz_RedwoodSlug_WhiteGround.png')}
+            />
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({

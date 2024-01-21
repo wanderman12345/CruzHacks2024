@@ -1,12 +1,62 @@
 import * as React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Platform} from 'react-native';
 import { useNavigation} from '@react-navigation/native';
+import { useState } from 'react';
+import { signInWithEmailAndPassword, signInWithPopup } from '@firebase/auth';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { googleProvider, facebookProvider,auth } from '../../Backend/firebaseConfig';
 
 
 const LoginScreen = ({navigation}) => {
- const nav = useNavigation();
+  const nav = useNavigation();
+  const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
+
+    function changeUserName(e){
+        setUserName(e.target.value);
+    }
+    function changePassWord(e) {
+        setPassword(e.target.value);
+    }
+    function respondBack(){
+        if(userName.length === 0){
+            setErrorMsg("Need to set UserName to more than 0 characters");
+        }else if(password.length === 0){
+            setErrorMsg("Need to set Password to more than 0 characters");
+        }else{
+            console.log(userName, password);
+            signInWithEmailAndPassword(auth,userName,password)
+            .then((userCredential) => {
+                setIsSignedIn(true)
+                navigate("../Introhome");
+
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                if(errorCode === 'auth/user-not-found'){
+                    setErrorMsg("Email is not found");
+                }else if(errorCode === 'auth/wrong-password'){
+                    setErrorMsg("Password is Incorrect")
+                }
+            });
+        }
+    }
+    const signInWithGoogle = async() => {
+        try {
+            await signInWithPopup(auth, googleProvider);
+        } catch (err){
+            console.error(err);
+        }
+    }
+    const signInWithFacebook = async() => {
+        try {
+            await signInWithPopup(auth, facebookProvider);
+        } catch (err){
+            console.error(err);
+        }
+    }
   return (
     <View style={styles.container}>
       <View style={styles.circleYellow} />
@@ -24,31 +74,33 @@ const LoginScreen = ({navigation}) => {
         style={styles.input}
         placeholder="Enter Email"
         keyboardType="email-address"
+        onChange={changeUserName}
       />
       <TextInput
         style={styles.input}
         placeholder="Enter Password"
+        onChange={changePassWord}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.loginButton}>
+      <TouchableOpacity style={styles.loginButton} onPress={respondBack}>
         <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
       <View style={styles.divider} />
       <Text style={styles.signUpWithText}>Or sign up with</Text>
       <View style={styles.socialIcons}>
-        <TouchableOpacity style={styles.socialButtonsContainer}>
+        <TouchableOpacity style={styles.socialButtonsContainer} onPress={signInWithGoogle}>
         <Image
             style={styles.googleIcon}
             source={require('../../Images/GoogleIcon.png')}
         />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButtonsContainer2}>
+        <TouchableOpacity style={styles.socialButtonsContainer2} onPress={signInWithFacebook}>
         <Image
             style={styles.googleIcon}
             source={require('../../Images/Facebook.png')}
         />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButtonsContainer3}>
+        <TouchableOpacity style={styles.socialButtonsContainer3} >
         <Image
             style={styles.googleIcon}
             source={require('../../Images/Linkedin.png')}
