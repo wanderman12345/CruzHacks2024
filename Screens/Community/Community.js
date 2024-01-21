@@ -1,125 +1,62 @@
 import * as React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Platform} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Platform, ScrollView} from 'react-native';
 import { useNavigation} from '@react-navigation/native';
-import { useState } from 'react';
-import { signInWithEmailAndPassword, signInWithPopup } from '@firebase/auth';
+import { getAllUserInfo } from '../../Backend/backend';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { googleProvider, facebookProvider,auth } from '../../Backend/firebaseConfig';
 
 
-const LoginScreen = ({navigation}) => {
-  const nav = useNavigation();
-  const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
-    const [errorMsg, setErrorMsg] = useState('');
+const Community = ({navigation}) => {
+ const nav = useNavigation();
 
-    function changeUserName(e){
-        setUserName(e.target.value);
-    }
-    function changePassWord(e) {
-        setPassword(e.target.value);
-    }
-    function respondBack(){
-        if(userName.length === 0){
-            setErrorMsg("Need to set UserName to more than 0 characters");
-        }else if(password.length === 0){
-            setErrorMsg("Need to set Password to more than 0 characters");
-        }else{
-            console.log(userName, password);
-            signInWithEmailAndPassword(auth,userName,password)
-            .then((userCredential) => {
-                setIsSignedIn(true)
-                navigate("../Introhome");
-
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                if(errorCode === 'auth/user-not-found'){
-                    setErrorMsg("Email is not found");
-                }else if(errorCode === 'auth/wrong-password'){
-                    setErrorMsg("Password is Incorrect")
-                }
-            });
-        }
-    }
-    const signInWithGoogle = async() => {
-        try {
-            await signInWithPopup(auth, googleProvider);
-        } catch (err){
-            console.error(err);
-        }
-    }
-    const signInWithFacebook = async() => {
-        try {
-            await signInWithPopup(auth, facebookProvider);
-        } catch (err){
-            console.error(err);
-        }
-    }
+//  getAllUserInfo()
+ // Sample data for cards (replace this with your actual data)
+ const hi = async() => {
+    try {
+        await getAllUserInfo();
+        // Other code that depends on the completion of getAllUserInfo
+      } catch (error) {
+        console.error(error);
+      }
+  };
+ const cardData = [
+    { id: 1, image: require("../../Images/Rectangle_4.png"), title: "Eduardo", addiction: "Alcoholism", Description: "Have been sober for 2.5 years, and willing to help anyone in need."},
+    { id: 2, image: require("../../Images/Rectangle_4.png"), title: "John", addiction: "marijuana", Description: "Hi there"},
+    { id: 3, image: require("../../Images/Rectangle_4.png"), title: "Bob" },
+    // Add more card data as needed
+  ];
   return (
     <View style={styles.container}>
       <View style={styles.circleYellow} />
       <View style={styles.circleBlue} />
 
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>Login Account</Text>
-      </View>
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleSlug}>Slug</Text>
-        <Text style={styles.titleCare}>Care</Text>
+        <Text style={styles.header}>Community Page</Text>
       </View>
 
       <TextInput
         style={styles.input}
-        placeholder="Enter Email"
-        keyboardType="email-address"
-        onChange={changeUserName}
+        placeholder="search"
+        placeholderTextColor= "black"
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Password"
-        onChange={changePassWord}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.loginButton} onPress={respondBack}>
-        <Text style={styles.loginButtonText}>Login</Text>
-      </TouchableOpacity>
-      <View style={styles.divider} />
-      <Text style={styles.signUpWithText}>Or sign up with</Text>
-      <View style={styles.socialIcons}>
-        <TouchableOpacity style={styles.socialButtonsContainer} onPress={signInWithGoogle}>
-        <Image
-            style={styles.googleIcon}
-            source={require('../../Images/GoogleIcon.png')}
-        />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButtonsContainer2} onPress={signInWithFacebook}>
-        <Image
-            style={styles.googleIcon}
-            source={require('../../Images/Facebook.png')}
-        />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButtonsContainer3} >
-        <Image
-            style={styles.googleIcon}
-            source={require('../../Images/Linkedin.png')}
-        />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.divider} />
-
-      <Text style={styles.notRegisteredText}>Not register yet ?</Text>
-      <View style={styles.buttons}>
-      <TouchableOpacity onPress={() => nav.navigate('Community')}>
-        <Text style={styles.createAccountText}>Create Account</Text>
-      </TouchableOpacity>
-      </View>
-      {/* Replace with your actual image */}
-      <Image
-        // style={styles.imageStyle}
-        // source={require('../../Images/SDS_UCSantaCruz_RedwoodSlug_WhiteGround.png')}
-      />
+     <ScrollView contentContainerStyle= {styles.cards}>
+    {cardData.map((card) => (
+        <View key={card.id} style={styles.card}>
+        <Text style={styles.cardText}>{card.title}</Text>
+          <Image
+            style={styles.cardImage}
+            source={card.image}
+          />
+           <Text style={styles.cardAddiction}> Addiction: {card.addiction}</Text>
+           <Text style={styles.Description}> {card.Description}</Text>
+           <View style={styles.buttons}>
+           <TouchableOpacity onPress={() => hi()}>
+           <Text style={styles.chat}>chat!</Text>
+           </TouchableOpacity>
+          </View>
+        </View>
+        ))}
+    </ScrollView>
     </View>
   );
 };
@@ -127,11 +64,37 @@ const LoginScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'start',
     justifyContent: 'flex-start',
     paddingTop: 60, // Adjust this for status bar height and top spacing
     paddingHorizontal: 20, // Side padding for the whole screen
     backgroundColor: 'white',
+  },
+  textInput: {
+    color: 'black'
+  },
+  chat: {
+    marginTop: -15,
+    marginLeft: -20,
+    position: 'absolute',
+    fontSize: 21,
+     color: 'white',
+  },
+  cardButton: {
+    position: 'absolute',
+    marginTop: 290,
+    marginLeft: 65
+  },
+  buttons: {
+    position: 'absolute',
+    backgroundColor: 'brown',
+    borderRadius: 15,
+    padding: 20,
+    marginTop: 280,
+    marginLeft: 80,
+    width: '40%',
+    alignItems: 'center',
+    zIndex: 1,
   },
   titleContainer: {
     flexDirection: 'row',
@@ -143,10 +106,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
   },
+  cardAddiction:{
+    position: 'absolute',
+    color: 'red',
+    alignContent: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 175, // Adjust as needed
+    marginLeft: 50,
+    textAlign: 'center', // Center the text
+    zIndex: 1,
+
+  },
   header: {
-    alignSelf: 'flex-start', // aligns the text to the left
-    fontSize: 24,
-    fontWeight: '600',
+    alignSelf: 'center', // aligns the text to the left
+    fontSize: 30,
+    fontWeight: '800',
     color: 'black',
     //marginTop: 3, // or adjust according to your status bar height
     marginLeft: 10, // or adjust for desired padding from the left edge
@@ -154,6 +129,25 @@ const styles = StyleSheet.create({
   headerContainer: {
     width: '100%', // Take full width to align the text to the left
     marginBottom: 20,
+  },
+  cards: {
+    flexDirection: 'row', // Align cards horizontally
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    padding: 10,
+
+  },
+  Description: {
+    fontFamily: 'System',
+    position: 'absolute',
+    color: 'black',
+    alignContent: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 200, // Adjust as needed
+    marginLeft: 50,
+    textAlign: 'center', // Center the text
+    zIndex: 1,
   },
   titleSlug: {
     height: 70,
@@ -169,16 +163,31 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: '700',
   },
+  cardText: {
+    alignContent: 'center',
+    position: 'absolute',
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginTop: 130, // Adjust as needed
+    marginLeft: 80,
+    textAlign: 'center', // Center the text
+    zIndex: 1,
+  },
   input: {
+    color: 'red',
+    backgroundColor: 'white',
+    justifyContent: 'flex-start',
     height: 48,
+    alignItems: 'flex-start',
     width: '80%',
     marginVertical: 10,
     borderWidth: 0.6,
-    borderColor: '#6C6A6A',
-    borderRadius: 8,
-    padding: 10,
+
+    borderRadius: 6,
+    padding: 7,
   },
   loginButton: {
+    marginLeft: 30,
     backgroundColor: '#FFC600',
     borderRadius: 8,
     padding: 10,
@@ -331,4 +340,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default Community;

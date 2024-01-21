@@ -7,6 +7,7 @@ import RegisterScreen from "./Screens/Register/Register.js";
 import LoginScreen from "./Screens/Login/Login.js";
 import ProfileInfoScreen from './Screens/ProfileInfo/ProfileInfo.js';
 import QuestionnaireScreen from './Screens/QuestionnaireScreen/QuestionnaireScreen.js';
+import CommunityScreen from "./Screens/Community/Community.js";
 
 
 export default function App() {
@@ -19,6 +20,8 @@ export default function App() {
       <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
       <Stack.Screen name="ProfileInfo" component={ProfileInfoScreen} options={{ headerShown: false }} />
       <Stack.Screen name="QuestionScreen" component={QuestionnaireScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Community" component={CommunityScreen} options={{ headerShown: false }} />
+
     </Stack.Navigator>
   </NavigationContainer>
 );
