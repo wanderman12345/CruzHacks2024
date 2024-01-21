@@ -1,15 +1,15 @@
 import { db } from "./firebaseConfig";
-import { doc, setDoc, updateDoc, getDoc, getDocs } from 'firebase/firestore';
+import { doc, setDoc, updateDoc, getDoc, getDocs, collection } from 'firebase/firestore';
 
 export const getAllUserInfo = async() => {
     const userCollection = collection(db, "users");
     try{
-      console.log("First")
+      console.log("First");
       let data = await getDocs(userCollection);
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data()
-      }))
-      console.log(filteredData);
+      // const filteredData = data.docs.map((doc) => ({
+      // //   ...doc.data()r
+      // }))
+    //   console.log(filteredData);
     } catch (err) {
       console.error(err);
     }

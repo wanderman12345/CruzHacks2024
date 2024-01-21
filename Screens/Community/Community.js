@@ -1,13 +1,24 @@
 import * as React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Platform, ScrollView} from 'react-native';
 import { useNavigation} from '@react-navigation/native';
+import { getAllUserInfo } from '../../Backend/backend';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 const Community = ({navigation}) => {
  const nav = useNavigation();
+
+//  getAllUserInfo()
  // Sample data for cards (replace this with your actual data)
+ const hi = async() => {
+    try {
+        await getAllUserInfo();
+        // Other code that depends on the completion of getAllUserInfo
+      } catch (error) {
+        console.error(error);
+      }
+  };
  const cardData = [
     { id: 1, image: require("../../Images/Rectangle_4.png"), title: "Eduardo", addiction: "Alcoholism", Description: "Have been sober for 2.5 years, and willing to help anyone in need."},
     { id: 2, image: require("../../Images/Rectangle_4.png"), title: "John", addiction: "marijuana", Description: "Hi there"},
@@ -38,11 +49,11 @@ const Community = ({navigation}) => {
           />
            <Text style={styles.cardAddiction}> Addiction: {card.addiction}</Text>
            <Text style={styles.Description}> {card.Description}</Text>
-           <Image
-            style={styles.cardButton}
-            source={require("../../Images/Rectangle_5.png")}
-          />
-           <Text style={styles.chat}> chat now!</Text>
+           <View style={styles.buttons}>
+           <TouchableOpacity onPress={() => hi()}>
+           <Text style={styles.chat}>chat!</Text>
+           </TouchableOpacity>
+          </View>
         </View>
         ))}
     </ScrollView>
@@ -63,17 +74,27 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   chat: {
+    marginTop: -15,
+    marginLeft: -20,
     position: 'absolute',
-    marginTop: 300,
-    marginLeft: 90,
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 21,
+     color: 'white',
   },
   cardButton: {
     position: 'absolute',
     marginTop: 290,
     marginLeft: 65
+  },
+  buttons: {
+    position: 'absolute',
+    backgroundColor: 'brown',
+    borderRadius: 15,
+    padding: 20,
+    marginTop: 280,
+    marginLeft: 80,
+    width: '40%',
+    alignItems: 'center',
+    zIndex: 1,
   },
   titleContainer: {
     flexDirection: 'row',
